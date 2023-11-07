@@ -1,9 +1,18 @@
 #pragma once
+#include "object.h"
 
 class Range
 {
 public:
-	double x1, y1, x2, y2;
+	Point point0, point1;
 	Range();
-	Range(double _x1, double _y1, double _x2, double _y2);
+	Range(double x0, double y0, double x1, double y1);
+	Range(const Point& p0, const Point& p1);
+	Range(const Range& r);
+	Range& operator=(const Range& r);
+	Range& operator()(double x0, double y0, double x1, double y1);
+	Range& operator()(const Point& p0, const Point& p1);
+	Range& operator()(const Range& r);
+	Range operator+(const Point& p) const;
+	Range& operator+=(const Point& p);
 };

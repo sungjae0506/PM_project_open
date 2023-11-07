@@ -1,9 +1,17 @@
 #pragma once
-#include "texture.h"
+#include <GL/freeglut.h>
+#include <FreeImage.h>
+#include "image_loader.h"
 #include "range.h"
 
 class Image
 {
-	Texture texture;
+public:
+	string name;
+	ImageLoader* imageLoaderPointer;
 	Range range;
+	Image();
+	Image(string file, const Range &r);
+	void operator() (string file, const Range &r);
+	void draw();
 };

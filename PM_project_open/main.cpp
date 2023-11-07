@@ -2,7 +2,7 @@
 #include <GL/freeglut.h>
 #include <FreeImage.h>
 #include "image_loader.h"
-#include "texture.h"
+#include "image.h"
 #include "object.h"
 #include "read_map.h"
 #include "player.h"
@@ -12,14 +12,14 @@ using namespace std;
 #define HEIGHT 320
 
 ImageLoader imageLoader;
-Texture snu;
+Image snu;
 
 vector<vector<int>> v;
 Lines test;
 
 void drawSquareWithTexture() {
 
-	//snu.drawRect(-100, -100, 100, 100);
+	snu.draw();
 	test.print();
 }
 void display() {
@@ -41,11 +41,11 @@ int main(int argc, char** argv) {
 
 	glutCreateWindow("Texture mapping");
 
-	snu("image/snu.png");
+	snu("image/snu.png", Range(-100, -100, 100, 100));
 
 	
 	v = readMap("map.txt");
-	test = vectorToLines(v, -100, -100, 100, 100);
+	test = vectorToLines(v, Range(- 100, -100, 100, 100));
 
 	
 

@@ -11,20 +11,20 @@ FIBITMAP* ImageLoader::createBitMap(string filename) {
 		// attemp to get from file extension
 		format = FreeImage_GetFIFFromFilename(filename.data());
 		if (!FreeImage_FIFSupportsReading(format)) {
-			cout << "Detected image format cannot be read!" << endl;
+			//cout << "Detected image format cannot be read!" << endl;
 			exit(-1);
 		}
 	}
 	FIBITMAP* bitmap = FreeImage_Load(format, filename.data());
 	int bitsPerPixel = FreeImage_GetBPP(bitmap);
-	cout << "Source image has " << bitsPerPixel << " bits per pixel." << endl;
+	//cout << "Source image has " << bitsPerPixel << " bits per pixel." << endl;
 	FIBITMAP* bitmap32;
 	if (bitsPerPixel == 32) {
-		cout << "Skipping conversion." << endl;
+		//cout << "Skipping conversion." << endl;
 		bitmap32 = bitmap;
 	}
 	else {
-		cout << "Converting to 32-bits." << endl;
+		//cout << "Converting to 32-bits." << endl;
 		bitmap32 = FreeImage_ConvertTo32Bits(bitmap);
 	}
 	return bitmap32;
