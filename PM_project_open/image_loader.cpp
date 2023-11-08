@@ -34,6 +34,9 @@ ImageLoader::ImageLoader() {}
 
 void ImageLoader::load(string path, string name)
 {
+	if (u_map.find(name) != u_map.end())
+		return;
+
 	FIBITMAP* bitmap32 = createBitMap(path);
 	GLuint textureID;
 	int imageWidth = FreeImage_GetWidth(bitmap32);

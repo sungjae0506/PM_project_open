@@ -92,4 +92,5 @@ void Map::readMap(string file)
 			if (s[j] == '#')
 				tileVector[i][j] = 1;
 	}
+	platform = vectorToLines(tileVector, Range(0, 0, 320, 320));
 }

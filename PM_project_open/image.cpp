@@ -25,6 +25,11 @@ void Image::operator() (string file, const Range &r)
 	range = r;
 }
 
+Image Image::operator+ (const Point& p)
+{
+	return Image(name, Range(range.point0 + p, range.point1 + p));
+}
+
 void Image::draw()
 {
 	glEnable(GL_TEXTURE_2D);

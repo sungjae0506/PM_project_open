@@ -206,7 +206,7 @@ void Line::print(void) const
 	glVertex2f(point0.x, point0.y);
 	glVertex2f(point1.x, point1.y);
 	glEnd();
-	//printf("%lf %lf %lf %lf\n", point[0].x, point[0].y, point[1].x, point[1].y);
+	//printf("%lf %lf %lf %lf\n", point0.x, point0.y, point1.x, point1.y);
 }
 
 // /////////////////////////////////////////////////////////////////////////////////////
@@ -270,6 +270,6 @@ vector<vector<pair<CollisionType, Line>>> Lines::collisionDetection(const Lines&
 }
 void Lines::print(void) const
 {
-	for (auto l : line)
+	for (auto &l : line)
 		l.print();
 }
