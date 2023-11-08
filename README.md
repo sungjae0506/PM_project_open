@@ -13,10 +13,15 @@
 4. window
 
 구현 예정
-1. background
+1. map
 2. sound_loader
 3. sound
 4. page
+5. bubble
+6. enemy
+7. game
+
+---
 
 세부 설명
 image: 이미지 출력
@@ -42,5 +47,7 @@ entity: 움직이는 물체 (Player, Enemy, Bubble ...) 의 부모 클래스
 player: 플레이어의 정보 저장 클래스 (Entity로부터 상속)
 
 read_map: 맵 읽어들임 (추후 json 파서 구현 예정)
+
+window: 창 정보 저장 및 함수 바인딩
 
 ---
