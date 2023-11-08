@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-ImageLoader textureImageLoader;
+static ImageLoader imageLoader;
 
 Image::Image() 
 {
@@ -12,16 +12,16 @@ Image::Image()
 Image::Image(string file, const Range &r)
 {
 	name = file;
-	textureImageLoader.load(file, file);
-	imageLoaderPointer = &textureImageLoader;
+	imageLoader.load(file, file);
+	imageLoaderPointer = &imageLoader;
 	range = r;
 }
 
 void Image::operator() (string file, const Range &r)
 {
 	name = file;
-	textureImageLoader.load(file, file);
-	imageLoaderPointer = &textureImageLoader;
+	imageLoader.load(file, file);
+	imageLoaderPointer = &imageLoader;
 	range = r;
 }
 

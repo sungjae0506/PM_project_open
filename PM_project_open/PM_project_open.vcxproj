@@ -149,16 +149,19 @@
     <ClCompile Include="read_map.cpp" />
     <ClCompile Include="sound_loader.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="image_loader.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="read_map.h" />
     <ClInclude Include="sound_loader.h" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="map.txt" />

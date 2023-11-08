@@ -6,13 +6,14 @@
 #include "object.h"
 #include "read_map.h"
 #include "player.h"
+#include "window.h"
 
 using namespace std;
 #define WIDTH 320
 #define HEIGHT 320
 
-ImageLoader imageLoader;
 Image snu;
+ImageLoader imageLoader;
 
 vector<vector<int>> v;
 Lines test;
@@ -20,7 +21,7 @@ Lines test;
 void drawSquareWithTexture() {
 
 	snu.draw();
-	test.print();
+	//test.print();
 }
 void display() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -33,22 +34,19 @@ void display() {
 	drawSquareWithTexture();
 	glFinish();
 }
-int main(int argc, char** argv) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
-	glutInitWindowPosition(300, 300);
-	glutInitWindowSize(WIDTH, HEIGHT);
 
-	glutCreateWindow("Texture mapping");
+int main(int argc, char** argv) {
+	
+	Window window(&argc, argv, 300, 300, WIDTH, HEIGHT, "Texture mapping");
 
 	snu("image/snu.png", Range(-100, -100, 100, 100));
 
 	
 	v = readMap("map.txt");
-	test = vectorToLines(v, Range(- 100, -100, 100, 100));
+	test = vectorToLines(v, Range(0, -20, 320, 300));
+	//test = vectorToLines(v, Range(-100, -100, 100, 100));
 
 	
-
 	glutDisplayFunc(display);
 	glutMainLoop();
 	return 0;
