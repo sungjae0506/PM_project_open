@@ -1,26 +1,7 @@
-#include "read_map.h"
+#include "map.h"
+#include "object.h"
 
-vector<vector<int>> readMap(string file)
-{
-	fstream f(file);
-	vector<vector<int>> arr;
-	string s;
-	int h, w;
-	f >> h >> w;
-	arr.resize(h);
-	for (int i = 0; i < h; ++i)
-		arr[i].resize(w);
-	for (int i = 0; i < h; ++i)
-	{
-		f >> s;
-		for (int j = 0; j < w; ++j)
-			if (s[j] == '#')
-				arr[i][j] = 1;
-	}
-	return arr;
-}
-
-Point indexToPoint(int i, int j, int h, int w, const Range &r)
+Point indexToPoint(int i, int j, int h, int w, const Range& r)
 {
 	return Point(r.point0.x + (j * (r.point1.x - r.point0.x) / w), r.point1.y - (i * (r.point1.y - r.point0.y)) / h);
 }
@@ -89,4 +70,26 @@ Lines vectorToLines(vector<vector<int>>& arr, const Range &r)
 	}
 
 	return lines;
+}
+
+Map::Map()
+{
+}
+
+void Map::readMap(string file)
+{
+	fstream f(file);
+	string s;
+	int h, w;
+	f >> h >> w;
+	tileVector.resize(h);
+	for (int i = 0; i < h; ++i)
+		tileVector[i].resize(w);
+	for (int i = 0; i < h; ++i)
+	{
+		f >> s;
+		for (int j = 0; j < w; ++j)
+			if (s[j] == '#')
+				tileVector[i][j] = 1;
+	}
 }

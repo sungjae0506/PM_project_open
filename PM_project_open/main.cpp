@@ -4,7 +4,7 @@
 #include "image_loader.h"
 #include "image.h"
 #include "object.h"
-#include "read_map.h"
+#include "map.h"
 #include "player.h"
 #include "window.h"
 
@@ -21,14 +21,15 @@ Lines test;
 void drawSquareWithTexture() {
 
 	snu.draw();
-	//test.print();
+	test.print();
 }
 void display() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-WIDTH / 2.0, WIDTH / 2.0, -HEIGHT / 2.0, HEIGHT / 2.0, -100.0, 100.0);
+	//glOrtho(-WIDTH / 2.0, WIDTH / 2.0, -HEIGHT / 2.0, HEIGHT / 2.0, -100.0, 100.0);
+	glOrtho(0.0, WIDTH, 0.0, HEIGHT, -100.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	drawSquareWithTexture();
@@ -39,11 +40,10 @@ int main(int argc, char** argv) {
 	
 	Window window(&argc, argv, 300, 300, WIDTH, HEIGHT, "Texture mapping");
 
-	snu("image/snu.png", Range(-100, -100, 100, 100));
-
+	//snu("image/snu.png", Range(0, 0, 320, 320));
 	
-	v = readMap("map.txt");
-	test = vectorToLines(v, Range(0, -20, 320, 300));
+	//v = readMap("map.txt");
+	//test = vectorToLines(v, Range(0, -20, 320, 300));
 	//test = vectorToLines(v, Range(-100, -100, 100, 100));
 
 	

@@ -146,7 +146,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="range.cpp" />
-    <ClCompile Include="read_map.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="sound_loader.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="window.cpp" />
@@ -158,7 +158,7 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="range.h" />
-    <ClInclude Include="read_map.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="sound_loader.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="window.h" />
