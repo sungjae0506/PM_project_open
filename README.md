@@ -6,11 +6,15 @@
 3. object
 4. range
 
+---
+
 구현 중
 1. entity
 2. player
 3. read_map
 4. window
+
+---
 
 구현 예정
 1. map
@@ -24,6 +28,7 @@
 ---
 
 세부 설명
+
 image: 이미지 출력
 
 예시) Image image("snu.png", Range(0, 0, 100, 100)), image.draw()
