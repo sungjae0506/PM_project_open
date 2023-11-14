@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "object.h"
+#include "map"
 using namespace std;
 
 class Entity
@@ -21,4 +22,5 @@ public:
 	virtual void draw(void) = 0;
 	virtual void move(void) = 0;
 	virtual void collisionDetection(const Entity* e) = 0;
+	//virtual void collisionDetection(const Map* m) = 0;
 };

@@ -29,4 +29,5 @@ public:
 	// 이미지 그리기:   snu.draw();
 	// 이미지 평행이동: snu + Point(80, 80);
 	// 평행이동 후 그리기: (snu + Point(80, 80)).draw()
+
 };

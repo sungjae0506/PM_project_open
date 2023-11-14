@@ -6,8 +6,8 @@ Player::Player()
 Player::Player(Point _pos)
 {
 	pos = _pos;
-	hitBox.addLine(Line(Point(-10, 10), Point(10, 10), Point(0, 1)));    // 상
+	hitBox.addLine(Line(Point(-10, 10),  Point(10, 10),  Point(0, 1)));  // 상
 	hitBox.addLine(Line(Point(-10, -10), Point(10, -10), Point(0, -1))); // 하
 	hitBox.addLine(Line(Point(-10, -10), Point(-10, 10), Point(-1, 0))); // 좌
-	hitBox.addLine(Line(Point(10, -10), Point(10, 10), Point(1, 0)));    // 우
+	hitBox.addLine(Line(Point(10, -10),  Point(10, 10),  Point(1, 0)));  // 우
 }

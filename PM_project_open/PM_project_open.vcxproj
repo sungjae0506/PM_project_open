@@ -144,6 +144,7 @@
     <ClCompile Include="image_loader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="page.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="map.cpp" />
@@ -154,8 +155,10 @@
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="event.h" />
     <ClInclude Include="image_loader.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="page.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="map.h" />

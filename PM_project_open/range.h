@@ -16,3 +16,14 @@ public:
 	Range operator+(const Point& p) const;
 	Range& operator+=(const Point& p);
 };
+
+class Transform
+{
+public:
+	Range range0, range1;
+	Transform();
+	Transform(const Range& r0, const Range& r1);
+	Transform(const Transform& t);
+	Transform& operator()(const Range& r0, const Range& r1);
+	Point operator()(const Point& p);
+};

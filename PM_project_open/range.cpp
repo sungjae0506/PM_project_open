@@ -54,3 +54,32 @@ Range& Range::operator+=(const Point& p)
 {
 	return (*this) = (*this) + p;
 }
+
+Transform::Transform()
+{
+}
+Transform::Transform(const Range& r0, const Range& r1)
+{
+	range0 = r0;
+	range1 = r1;
+}
+Transform::Transform(const Transform& t)
+{
+	range0 = t.range0;
+	range1 = t.range1;
+}
+Transform& Transform::operator()(const Range& r0, const Range& r1)
+{
+	range0 = r0;
+	range1 = r1;
+	return *this;
+}
+Point Transform::operator()(const Point& p)
+{
+	Point temp = (p - range0.point0);
+	temp.x /= (range0.point1.x - range0.point0.x);
+	temp.y /= (range0.point1.y - range0.point0.y);
+	temp.x *= (range1.point1.x - range1.point0.x);
+	temp.y *= (range1.point1.y - range1.point0.y);
+	return temp + range1.point0;
+}
