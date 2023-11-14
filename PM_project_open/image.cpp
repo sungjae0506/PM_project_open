@@ -17,12 +17,13 @@ Image::Image(string file, const Range &r)
 	range = r;
 }
 
-void Image::operator() (string file, const Range &r)
+Image& Image::operator() (string file, const Range &r)
 {
 	name = file;
 	imageLoader.load(file, file);
 	imageLoaderPointer = &imageLoader;
 	range = r;
+	return *this;
 }
 
 Image Image::operator+ (const Point& p)

@@ -12,7 +12,7 @@ public:
 	Range range;
 	Image();
 	Image(string file, const Range &r);
-	void operator() (string file, const Range &r);
+	Image& operator() (string file, const Range &r);
 	Image operator+ (const Point& p);
 	void draw();
 };

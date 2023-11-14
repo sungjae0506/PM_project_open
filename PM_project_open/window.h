@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <array>
 #include "GL/freeglut.h"
 #include "page.h"
 #include "event.h"
@@ -17,20 +18,23 @@ void windowSpecial(int key, int x, int y);
 void windowSpecialUp(int key, int x, int y);
 
 void windowMouse(int button, int state, int x, int y);
-void windowMotion();
-void windowPassiveMotion();
+void windowMotion(int x, int y);
+void windowPassiveMotion(int x, int y);
 
 class Window
 {
 private:
-	string currentPage;
+	string windowName;
 public:
+	Window();
+	Window(string name, int* argc, char** argv, int x, int y, int w, int h);
+	Window& operator() (string name, int* argc, char** argv, int x, int y, int w, int h);
 
-	Window(int* argc, char** argv, int x, int y, int w, int h, Range coord, string name);
-	void addPage(Page& p);
-	void setPage(Page& p);
+	Window& addPage(const Page& p);
+	Window& addPages(vector<Page> p);
+
+	void setPage(Page p);
 	void setPage(string pageName);
-	//void displayFunc();
-	//vector<double> getWindowSize(void);
+	void mainLoop(string pageName);
 
 };

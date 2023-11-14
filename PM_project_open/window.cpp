@@ -3,51 +3,38 @@
 #include <ctime>
 #include <stdio.h>
 
-
 using namespace std;
 
 static int windowWidth = 0;
 static int windowHeight = 0;
-static Range windowCoord;
 static Transform mouseTransform;
 
 static double FPS = 60.0;
 static clock_t startClock = clock(), endClock;
 
-static vector<Page*> pages;
-static Page* currentPagePointer;
-
-vector<void(*)(void)> displayFuncVec;
-vector<void(*)(void)> idleFuncVec;
-vector<pair<pair<clock_t, clock_t>, double>> idleClockVec;
-
-// test
-Image SNU;
-
+static vector<Page> pages;
+static Page currentPage;
 
 void windowResize(int w, int h)
 {
 	windowWidth = w;
 	windowHeight = h;
-	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), windowCoord);
-	//printf("%d %d\n", w, h);
-}
+	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
+}	
 
 void windowDisplay()
 {
+	Range pageRange = currentPage.range;
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(windowCoord.point0.x, windowCoord.point1.x, windowCoord.point0.y, windowCoord.point1.y, -100.0, 100.0);
+	glOrtho(pageRange.point0.x, pageRange.point1.x, pageRange.point0.y, pageRange.point1.y, -100.0, 100.0);
 	glViewport(0, 0, windowWidth, windowHeight);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
-	//printf("ok\n");
-	
-	SNU("image/snu.png", Range(0, 0, 100, 100));
-	SNU.draw();
+
+	currentPage.draw();
 
 	glutSwapBuffers();
 }
@@ -59,30 +46,20 @@ void windowIdle() {
 		startClock = endClock;
 		glutPostRedisplay();
 	}
-	for (int i = 0; i < idleFuncVec.size(); ++i)
-	{
-		idleClockVec[i].second = clock();
-		if (idleClockVec[i].first.second - idleClockVec[i].first.first > 1000.0 / idleClockVec[i].second)
-		{
-			idleClockVec[i].first.first = idleClockVec[i].first.second;
-			idleFuncVec[i]();
-		}
-	}
 }
 
 void windowKeyboard(unsigned char key, int x, int y)
 {
 	char c[2] = { 0 };
 	c[0] = key;
-	currentPagePointer->keyboardEvent(KeyboardDown, string(c), mouseTransform(Point(x, y)));
-	//printf("%d %d\n", x, y);
+	currentPage.keyboardEvent(KeyboardDown, string(c), mouseTransform(Point(x, y)));
 }
 
 void windowKeyboardUp(unsigned char key, int x, int y)
 {
 	char c[2] = { 0 };
 	c[0] = key;
-	currentPagePointer->keyboardEvent(KeyboardUp, string(c), mouseTransform(Point(x, y)));
+	currentPage.keyboardEvent(KeyboardUp, string(c), mouseTransform(Point(x, y)));
 }
 
 void windowSpecial(int key, int x, int y)
@@ -161,7 +138,7 @@ void windowSpecial(int key, int x, int y)
 	default:
 		break;
 	}
-	currentPagePointer->keyboardEvent(KeyboardDown, s, mouseTransform(Point(x, y)));
+	currentPage.keyboardEvent(KeyboardDown, s, mouseTransform(Point(x, y)));
 }
 
 void windowSpecialUp(int key, int x, int y)
@@ -240,7 +217,7 @@ void windowSpecialUp(int key, int x, int y)
 	default:
 		break;
 	}
-	currentPagePointer->keyboardEvent(KeyboardUp, s, mouseTransform(Point(x, y)));
+	currentPage.keyboardEvent(KeyboardUp, s, mouseTransform(Point(x, y)));
 }
 
 void windowMouse(int button, int state, int x, int y)
@@ -270,24 +247,29 @@ void windowMouse(int button, int state, int x, int y)
 	default:
 		break;
 	}
-	currentPagePointer->mouseEvent(e, s, mouseTransform(Point(x, y)));
+	currentPage.mouseEvent(e, s, mouseTransform(Point(x, y)));
 }
 
 void windowMotion(int x, int y)
 {
-	currentPagePointer->mouseEvent(MouseMotion, "NONE", mouseTransform(Point(x, y)));
+	currentPage.mouseEvent(MouseMotion, "NONE", mouseTransform(Point(x, y)));
 }
 
 void windowPassiveMotion(int x, int y)
 {
-	currentPagePointer->mouseEvent(MousePassiveMotion, "NONE", mouseTransform(Point(x, y)));
+	currentPage.mouseEvent(MousePassiveMotion, "NONE", mouseTransform(Point(x, y)));
 }
 
-Window::Window(int* argc, char** argv, int x, int y, int w, int h, Range coord, string name)
+Window::Window()
+{
+}
+
+Window::Window(string name, int* argc, char** argv, int x, int y, int w, int h)
 {
 	windowWidth = w;
 	windowHeight = h;
-	windowCoord = coord;
+	windowName = name;
+
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
 	glutInitWindowPosition(x, y);
@@ -302,6 +284,70 @@ Window::Window(int* argc, char** argv, int x, int y, int w, int h, Range coord, 
 	glutKeyboardUpFunc(windowKeyboardUp);
 	glutSpecialFunc(windowSpecial);
 	glutSpecialUpFunc(windowSpecialUp);
+
+	glutMouseFunc(windowMouse);
+	glutMotionFunc(windowMotion);
+	glutPassiveMotionFunc(windowPassiveMotion);
 }
 
+Window& Window::operator() (string name, int* argc, char** argv, int x, int y, int w, int h)
+{
+	windowWidth = w;
+	windowHeight = h;
+	windowName = name;
+
+	glutInit(argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+	glutInitWindowPosition(x, y);
+	glutInitWindowSize(w, h);
+	glutCreateWindow(name.c_str());
+
+	glutReshapeFunc(windowResize);
+	glutDisplayFunc(windowDisplay);
+	glutIdleFunc(windowIdle);
+
+	glutKeyboardFunc(windowKeyboard);
+	glutKeyboardUpFunc(windowKeyboardUp);
+	glutSpecialFunc(windowSpecial);
+	glutSpecialUpFunc(windowSpecialUp);
+
+	glutMouseFunc(windowMouse);
+	glutMotionFunc(windowMotion);
+	glutPassiveMotionFunc(windowPassiveMotion);
+
+	return *this;
+}
+
+Window& Window::addPage(const Page& p)
+{
+	pages.push_back(p);
+	return *this;
+}
+
+Window& Window::addPages(vector<Page> ps)
+{
+	for (auto p : ps)
+		pages.push_back(p);
+	return *this;
+}
+
+void Window::setPage(Page p)
+{
+	currentPage = p;
+	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
+}
+
+void Window::setPage(string pageName)
+{
+	for (auto p : pages)
+		if (p.pageName == pageName)
+			currentPage = p;
+	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
+}
+
+void Window::mainLoop(string pageName)
+{
+	setPage(pageName);
+	glutMainLoop();
+}
 

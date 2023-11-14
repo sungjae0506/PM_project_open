@@ -8,16 +8,19 @@
 #include "map.h"
 #include "player.h"
 #include "window.h"
+#include "canvas.h"
 
 using namespace std;
 #define WIDTH 320
 #define HEIGHT 320
 
+Window window;
 
+Page mainPage;
+Page gamePage;
 
-static clock_t startClock = clock(), endClock;
+Canvas mainCanvas;
 
-//Image snu;
 Image snu;
 
 
@@ -25,6 +28,7 @@ vector<vector<int>> v;
 
 Map game_map;
 
+/*
 void drawSquareWithTexture() {
 
 	//glTranslatef(50, 50, 0);
@@ -61,17 +65,26 @@ void Idle() {
 		startClock = endClock;
 		glutPostRedisplay();
 	}
-}
+}*/
 
 int main(int argc, char** argv) {
+
+	//game_map.readMap("map.txt");
+
 	
-	Window window(&argc, argv, 300, 300, WIDTH, HEIGHT, Range(0, 0, 320, 320), "Texture mapping");
 
-	game_map.readMap("map.txt");
+	window("main window", &argc, argv, 300, 300, WIDTH, HEIGHT);
+	window.addPages
+	({
+		mainPage("mainPage", Range(0, 0, 320, 320))
+		.addImages
+		({
+			snu("image/snu.png", Range(0, 0, 100, 100))
+		}),
+		gamePage("gamePage", Range(0, 0, 320, 320))
+	});
 
-	//glutDisplayFunc(display);
-	//glutIdleFunc(Idle);
-	//window.displayFunc();
-	glutMainLoop();
+	window.mainLoop("mainPage");
+
 	return 0;
 }
