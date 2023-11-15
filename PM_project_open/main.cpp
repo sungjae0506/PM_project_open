@@ -67,21 +67,34 @@ void Idle() {
 	}
 }*/
 
+void drawGameMap()
+{
+	game_map.platform.print();
+}
+
 int main(int argc, char** argv) {
 
-	//game_map.readMap("map.txt");
-
-	
+	game_map.readMap("map.txt");
 
 	window("main window", &argc, argv, 300, 300, WIDTH, HEIGHT);
-	window.addPages
+
+	window
+	.addPages
 	({
-		mainPage("mainPage", Range(0, 0, 320, 320))
+		Page("mainPage", Range(0, 0, 320, 320))
 		.addImages
 		({
-			snu("image/snu.png", Range(0, 0, 100, 100))
+			Image("image/snu.png", Range(0, 0, 100, 100))
+		})
+		.addCanvases
+		({
+			Canvas(Range(100, 100, 320, 320), Range(0, 0, 320, 320))
+			.addDrawFunc
+			(
+				drawGameMap
+			)
 		}),
-		gamePage("gamePage", Range(0, 0, 320, 320))
+		Page("gamePage", Range(0, 0, 320, 320))
 	});
 
 	window.mainLoop("mainPage");

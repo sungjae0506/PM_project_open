@@ -12,6 +12,9 @@ static Transform mouseTransform;
 static double FPS = 60.0;
 static clock_t startClock = clock(), endClock;
 
+static double idlePerSecond = 120.0;
+static clock_t idleStartClock = clock(), idleEndClock;
+
 static vector<Page> pages;
 static Page currentPage;
 
@@ -45,6 +48,13 @@ void windowIdle() {
 	{
 		startClock = endClock;
 		glutPostRedisplay();
+	}
+
+	idleEndClock = clock();
+	if (idleEndClock - idleStartClock > 1000.0 / idlePerSecond)
+	{
+		idleStartClock = idleEndClock;
+		currentPage.idleEvent(IdleRunning);
 	}
 }
 
@@ -333,16 +343,20 @@ Window& Window::addPages(vector<Page> ps)
 
 void Window::setPage(Page p)
 {
+	currentPage.idleEvent(IdleEnd);
 	currentPage = p;
 	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
+	currentPage.idleEvent(IdleBegin);
 }
 
 void Window::setPage(string pageName)
 {
+	currentPage.idleEvent(IdleEnd);
 	for (auto p : pages)
 		if (p.pageName == pageName)
 			currentPage = p;
 	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
+	currentPage.idleEvent(IdleBegin);
 }
 
 void Window::mainLoop(string pageName)

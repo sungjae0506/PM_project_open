@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="background.cpp" />
+    <ClCompile Include="callback.cpp" />
     <ClCompile Include="canvas.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="image_loader.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
+    <ClInclude Include="callback.h" />
     <ClInclude Include="canvas.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="event.h" />

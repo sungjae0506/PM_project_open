@@ -17,20 +17,28 @@ Page& Page::operator() (string name, const Range r)
 	return *this;
 }
 
-void Page::keyboardEvent(KeyboardEvent event, string key, Point p)
+void Page::keyboardEvent(KeyboardEvent e, string key, Point p)
 {
-
+	for (auto& i : canvases)
+		i.keyboardEvent(e, key, p);
 }
 
-void Page::mouseEvent(MouseEvent event, string button, Point p)
+void Page::mouseEvent(MouseEvent e, string button, Point p)
 {
+	for (auto& i : canvases)
+		i.mouseEvent(e, button, p);
+}
 
+void Page::idleEvent(IdleEvent e)
+{
+	for (auto& i : canvases)
+		i.idleEvent(e);
 }
 
 void Page::draw()
 {
-	//for (auto& i : canvases)
-	//	i.draw();
+	for (auto& i : canvases)
+		i.draw();
 	for (auto& i : images)
 		i.draw();
 }

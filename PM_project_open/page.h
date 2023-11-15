@@ -20,8 +20,10 @@ public:
 	Page();
 	Page(string name, const Range r);
 	Page& operator() (string name, const Range r);
-	void keyboardEvent(KeyboardEvent event, string key, Point p);
-	void mouseEvent(MouseEvent event, string button, Point p);
+
+	void keyboardEvent(KeyboardEvent e, string key, Point p);
+	void mouseEvent(MouseEvent e, string button, Point p);
+	void idleEvent(IdleEvent e);
 	void draw();
 
 	Page& addCanvas(const Canvas &c);
